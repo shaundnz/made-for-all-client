@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <div className="mb-12 max-w-2xl space-y-4 text-center">
-        <h1 className="text-5xl font-bold ">Made For All!</h1>
+        <h1 className="text-5xl font-bold ">Made For All</h1>
         <p className="mt-4 text-xl">
           Enter a "Made For You" Spotify playlist, and generate a playlist of
           the the original uncustomized version.
