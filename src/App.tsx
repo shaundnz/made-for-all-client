@@ -12,7 +12,7 @@ function App() {
         </p>
         <form className="flex items-center space-x-2">
           <Input type="text" placeholder="Enter Spotify playlist link" />
-          <Button type="submit">Generate</Button>
+          <Button type="submit">Check Link</Button>
         </form>
       </div>
     </div>
