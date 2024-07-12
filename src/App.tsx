@@ -8,7 +8,7 @@ function App() {
         <h1 className="text-5xl font-bold ">Made For All!</h1>
         <p className="mt-4 text-xl">
           Enter a &quot;Made For You&quot; Spotify playlist, and generate a
-          playlist of the the original uncustomized version.
+          playlist of the the original, uncustomized version.
         </p>
         <form className="flex items-center space-x-2">
           <Input type="text" placeholder="Enter Spotify playlist link" />
