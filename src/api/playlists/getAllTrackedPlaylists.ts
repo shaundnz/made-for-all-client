@@ -23,7 +23,7 @@ type UseAllTrackedPlaylistsOptions = {
 
 export const useAllTrackedPlaylists = ({
   queryConfig,
-}: UseAllTrackedPlaylistsOptions) => {
+}: UseAllTrackedPlaylistsOptions = {}) => {
   return useQuery({
     ...getAllTrackedPlaylistsQueryOptions(),
     ...queryConfig,

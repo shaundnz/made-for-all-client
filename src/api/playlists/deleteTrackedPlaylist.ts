@@ -20,7 +20,7 @@ type UseDeleteTrackedPlaylistOptions = {
 
 export const useDeleteTrackedPlaylist = ({
   mutationConfig,
-}: UseDeleteTrackedPlaylistOptions) => {
+}: UseDeleteTrackedPlaylistOptions = {}) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};
