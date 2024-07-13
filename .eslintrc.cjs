@@ -43,6 +43,7 @@ module.exports = {
         'plugin:jest-dom/recommended',
         'plugin:tailwindcss/recommended',
         'plugin:vitest/legacy-recommended',
+        'plugin:@tanstack/eslint-plugin-query/recommended',
       ],
       rules: {
         'import/no-cycle': 'error',
