@@ -1,0 +1,3 @@
+import { Playlist } from '@spotify/web-api-ts-sdk';
+
+export type PlaylistData = Omit<Playlist, 'tracks'>;
