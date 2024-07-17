@@ -1,10 +1,70 @@
-import { factory, primaryKey } from '@mswjs/data';
+import { drop, factory, nullable, primaryKey } from '@mswjs/data';
 import { nanoid } from 'nanoid';
 
 const models = {
   playlist: {
-    spotifyPlaylistId: primaryKey(nanoid),
-    madeForAllPlaylistId: () => nanoid(),
+    id: primaryKey(nanoid),
+    spotifyPlaylist: {
+      collaborative: Boolean,
+      description: String,
+      images: Array,
+      primary_color: String,
+      public: Boolean,
+      type: String,
+      external_urls: {
+        spotify: String,
+      },
+      followers: {
+        href: nullable(String),
+        total: Number,
+      },
+      href: String,
+      id: String,
+      name: String,
+      owner: {
+        display_name: String,
+        external_urls: {
+          spotify: String,
+        },
+        href: String,
+        id: String,
+        type: String,
+        uri: String,
+      },
+      snapshot_id: String,
+      uri: String,
+    },
+    madeForAllPlaylist: {
+      collaborative: Boolean,
+      description: String,
+      images: Array,
+      primary_color: String,
+      public: Boolean,
+      type: String,
+      external_urls: {
+        spotify: String,
+      },
+      followers: {
+        href: nullable(String),
+        total: Number,
+      },
+      href: String,
+      id: String,
+      name: String,
+      owner: {
+        display_name: String,
+        external_urls: {
+          spotify: String,
+        },
+        href: String,
+        id: String,
+        type: String,
+        uri: String,
+      },
+      snapshot_id: String,
+      uri: String,
+      createdAt: Date,
+    },
   },
 };
 
@@ -46,5 +106,6 @@ export const initializeDb = async () => {
 };
 
 export const resetDb = () => {
+  drop(db);
   window.localStorage.clear();
 };

@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 import { env } from '@/config/env';
+import { createMadeForAllPlaylist } from '@/testing/dataGenerators';
 
 import { db, persistDb } from '../db';
 import { withDelay } from '../middleware';
@@ -31,8 +32,10 @@ export const playlistHandlers = [
 
         const playlist = db.playlist.findFirst({
           where: {
-            spotifyPlaylistId: {
-              equals: spotifyPlaylistId,
+            spotifyPlaylist: {
+              id: {
+                equals: spotifyPlaylistId,
+              },
             },
           },
         });
@@ -44,9 +47,11 @@ export const playlistHandlers = [
           );
         }
 
-        const result = db.playlist.create({
-          spotifyPlaylistId: spotifyPlaylistId,
-        });
+        const result = db.playlist.create(
+          createMadeForAllPlaylist({
+            spotifyPlaylist: { id: spotifyPlaylistId },
+          }),
+        );
         await persistDb('playlist');
         return HttpResponse.json(result);
       } catch (error: any) {
@@ -68,8 +73,10 @@ export const playlistHandlers = [
 
         const playlist = db.playlist.findFirst({
           where: {
-            spotifyPlaylistId: {
-              equals: spotifyPlaylistId,
+            spotifyPlaylist: {
+              id: {
+                equals: spotifyPlaylistId,
+              },
             },
           },
         });
@@ -96,12 +103,14 @@ export const playlistHandlers = [
     `${env.MADE_FOR_ALL_API_BASE_URL}/playlists/:id`,
     withDelay(({ params }) => {
       try {
-        const playlistId = params.id as string;
+        const spotifyPlaylistId = params.id as string;
 
         const playlist = db.playlist.findFirst({
           where: {
-            spotifyPlaylistId: {
-              equals: playlistId,
+            spotifyPlaylist: {
+              id: {
+                equals: spotifyPlaylistId,
+              },
             },
           },
         });
@@ -124,12 +133,14 @@ export const playlistHandlers = [
     `${env.MADE_FOR_ALL_API_BASE_URL}/playlists/:id`,
     withDelay(({ params }) => {
       try {
-        const playlistId = params.id as string;
+        const spotifyPlaylistId = params.id as string;
 
         const playlist = db.playlist.findFirst({
           where: {
-            spotifyPlaylistId: {
-              equals: playlistId,
+            spotifyPlaylist: {
+              id: {
+                equals: spotifyPlaylistId,
+              },
             },
           },
         });
@@ -140,8 +151,10 @@ export const playlistHandlers = [
 
         db.playlist.delete({
           where: {
-            spotifyPlaylistId: {
-              equals: playlistId,
+            spotifyPlaylist: {
+              id: {
+                equals: spotifyPlaylistId,
+              },
             },
           },
         });
