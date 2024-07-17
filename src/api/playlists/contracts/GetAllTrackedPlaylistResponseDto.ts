@@ -1,6 +1,3 @@
-import { PlaylistData } from './PlaylistData';
+import { GetTrackedPlaylistResponseDto } from './GetTrackedPlaylistResponseDto';
 
-export type GetAllTrackedPlaylistResponseDto = {
-  spotifyPlaylist: PlaylistData;
-  madeForAllPlaylist: PlaylistData;
-}[];
+export type GetAllTrackedPlaylistResponseDto = GetTrackedPlaylistResponseDto[];

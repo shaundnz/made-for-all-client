@@ -1,6 +1,6 @@
-import { PlaylistData } from './PlaylistData';
+import { MadeForAllPlaylistData, PlaylistData } from './PlaylistData';
 
 export interface GetTrackedPlaylistResponseDto {
   spotifyPlaylist: PlaylistData;
-  madeForAllPlaylist: PlaylistData;
+  madeForAllPlaylist: MadeForAllPlaylistData;
 }
