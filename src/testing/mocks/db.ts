@@ -1,4 +1,5 @@
 import { drop, factory, nullable, primaryKey } from '@mswjs/data';
+import { Database } from '@mswjs/data/lib/db/Database';
 import { nanoid } from 'nanoid';
 
 const models = {
@@ -67,6 +68,14 @@ const models = {
     },
   },
 };
+
+if (import.meta.env.TEST) {
+  /**
+   * https://github.com/mswjs/data/issues/275
+   * https://github.com/mswjs/data/pull/276
+   *  @ts-expect-error: Database instance is shared between tests, supposedly fixed, but issue persists on vite. Required to allow parallel test suites */
+  Database.prototype.generateId = () => nanoid();
+}
 
 export const db = factory(models);
 
