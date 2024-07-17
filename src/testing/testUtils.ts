@@ -22,7 +22,7 @@ export const createMadeForAllPlaylistsCreatedAtRelativeToNow = (
         name: `Playlist Name - Offset: ${offset}`,
       },
       madeForAllPlaylist: {
-        createdAt: dayjs(now).subtract(offset, 'day').toISOString(),
+        createdAt: dayjs(now).add(offset, 'day').toISOString(),
       },
     }),
   );

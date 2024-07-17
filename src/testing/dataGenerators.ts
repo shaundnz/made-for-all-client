@@ -4,7 +4,6 @@ import {
   randUuid,
   randCatchPhrase,
   randAlpha,
-  randPastDate,
 } from '@ngneat/falso';
 
 import { CreateTrackedPlaylistResponseDto } from '@/api/playlists/contracts';
@@ -67,7 +66,7 @@ export const generateMadeForAllPlaylist = ({
     },
     madeForAllPlaylist: {
       ...shared,
-      createdAt: randPastDate().toISOString(),
+      createdAt: new Date().toISOString(),
       external_urls: {
         spotify: `https://open.spotify.com/playlist/${madeForAllPlaylistId}`,
       },
