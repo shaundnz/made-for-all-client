@@ -8,7 +8,7 @@ export const useRecentlyTrackedPlaylists = (numberOfPlaylists: number) => {
   const selectRecentPlaylist = React.useCallback(
     (data: GetAllTrackedPlaylistResponseDto) => {
       const sortedPlaylistsMostRecentFirst = [...data].sort((a, b) =>
-        dayjs(a.madeForAllPlaylist.createdAt).isAfter(
+        dayjs(a.madeForAllPlaylist.createdAt).isBefore(
           dayjs(b.madeForAllPlaylist.createdAt),
         )
           ? 1
