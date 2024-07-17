@@ -96,33 +96,28 @@ describe('RecentTrackedPlaylistsCarousel', () => {
     ).toBeInTheDocument();
   });
 
-  it(
-    'should render nothing if the request for all playlists errors',
-    server.boundary(async () => {
-      server.use(
-        http.get(
-          `${env.MADE_FOR_ALL_API_BASE_URL}/playlists`,
-          withDelay(() => {
-            return HttpResponse.json(
-              { message: 'Server Error' },
-              { status: 500 },
-            );
-          }),
-          { once: true },
-        ),
-      );
+  it('should render nothing if the request for all playlists errors', async () => {
+    server.use(
+      http.get(
+        `${env.MADE_FOR_ALL_API_BASE_URL}/playlists`,
+        withDelay(() => {
+          return HttpResponse.json(
+            { message: 'Server Error' },
+            { status: 500 },
+          );
+        }),
+        { once: true },
+      ),
+    );
 
-      const { container } = renderWithContext(
-        <RecentTrackedPlaylistsCarousel />,
-      );
+    const { container } = renderWithContext(<RecentTrackedPlaylistsCarousel />);
 
-      await waitForElementToBeRemoved(() =>
-        screen.queryByTestId(
-          'recent-tracked-playlists-carousel-loading-skeleton',
-        ),
-      );
+    await waitForElementToBeRemoved(() =>
+      screen.queryByTestId(
+        'recent-tracked-playlists-carousel-loading-skeleton',
+      ),
+    );
 
-      expect(container).toBeEmptyDOMElement();
-    }),
-  );
+    expect(container).toBeEmptyDOMElement();
+  });
 });
