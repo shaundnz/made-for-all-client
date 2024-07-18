@@ -1,3 +1,3 @@
 export * from './CarouselPlaylistItem';
-export * from './TrackedPlaylistPreview';
+export * from '../../../components/playlists/TrackedPlaylistPreview';
 export * from './RecentTrackedPlaylistsCarousel';
