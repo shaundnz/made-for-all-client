@@ -1,5 +1,7 @@
 import AutoScroll from 'embla-carousel-auto-scroll';
+import React from 'react';
 
+import { useAllTrackedPlaylists } from '@/api/playlists';
 import {
   Carousel,
   CarouselContent,
@@ -8,16 +10,27 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Skeleton } from '@/components/ui/skeleton';
-
-import { useRecentlyTrackedPlaylists } from '../hooks';
+import {
+  useFilteredPlaylists,
+  PlaylistsFilterOrder,
+  PlaylistsFilterType,
+} from '@/hooks';
 
 import { CarouselPlaylistItem } from './CarouselPlaylistItem';
 
 const MAX_NUMBER_PLAYLISTS_TO_SHOW = 6;
 
 export const RecentTrackedPlaylistsCarousel = () => {
-  const { isLoading, isError, data } = useRecentlyTrackedPlaylists(
-    MAX_NUMBER_PLAYLISTS_TO_SHOW,
+  const { isLoading, isError, data } = useAllTrackedPlaylists();
+  const orderedPlaylists = useFilteredPlaylists(
+    PlaylistsFilterType.CreatedAt,
+    PlaylistsFilterOrder.Descending,
+    data ? data : [],
+  );
+
+  const carouselPlaylistItems = React.useMemo(
+    () => orderedPlaylists.slice(0, MAX_NUMBER_PLAYLISTS_TO_SHOW),
+    [orderedPlaylists],
   );
 
   if (isLoading) {
@@ -56,7 +69,7 @@ export const RecentTrackedPlaylistsCarousel = () => {
         ]}
       >
         <CarouselContent>
-          {data.map((playlist) => (
+          {carouselPlaylistItems.map((playlist) => (
             <CarouselItem
               key={playlist.spotifyPlaylist.id}
               className="basis-1/2 lg:basis-1/3"
