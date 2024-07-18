@@ -22,17 +22,17 @@ const defaultArgs = {
 };
 
 describe('useTrackedPlaylistPreview', () => {
-  it('should render the loading state if allPlaylistsLoading is true', () => {
+  it('should return a none view state state if allPlaylistsLoading is true', () => {
     const { result } = renderHook(() =>
       useTrackedPlaylistPreview({ ...defaultArgs, allPlaylistsLoading: true }),
     );
 
     expect(result.current.trackedPlaylistViewState).toBe(
-      TrackedPlaylistViewState.Loading,
+      TrackedPlaylistViewState.None,
     );
   });
 
-  it('should render the loading state if formSubmitting is true', () => {
+  it('should return a loading state if formSubmitting is true', () => {
     const { result } = renderHook(() =>
       useTrackedPlaylistPreview({ ...defaultArgs, formSubmitting: true }),
     );

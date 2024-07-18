@@ -61,10 +61,17 @@ export const useTrackedPlaylistPreview = ({
     );
   }, [allPlaylistsData, inputPlaylistIdValue]);
 
-  if (allPlaylistsLoading || formSubmitting) {
+  if (formSubmitting) {
     return {
       setMostRecentlyTrackedPlaylist,
       trackedPlaylistViewState: TrackedPlaylistViewState.Loading,
+    };
+  }
+
+  if (allPlaylistsLoading) {
+    return {
+      setMostRecentlyTrackedPlaylist,
+      trackedPlaylistViewState: TrackedPlaylistViewState.None,
     };
   }
 

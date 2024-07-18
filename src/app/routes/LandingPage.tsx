@@ -1,9 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { useForm, useWatch } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { useCreateTrackedPlaylist } from '@/api/playlists';
+import {
+  useAllTrackedPlaylists,
+  useCreateTrackedPlaylist,
+} from '@/api/playlists';
 import { CreateTrackedPlaylistRequestSchema } from '@/api/playlists/contracts';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,41 +19,92 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  TrackedPlaylistPreview,
+  RecentTrackedPlaylistsCarousel,
+} from '@/features/landingPage/components';
+import {
+  TrackedPlaylistViewState,
+  useTrackedPlaylistPreview,
+} from '@/features/landingPage/hooks/useTrackedPlaylistPreview.hook';
 
 export const LandingPage = () => {
-  const [mostRecentTrackedPlaylistId, setMostRecentTrackedPlaylistId] =
-    useState('');
+  const allTrackedPlaylistsQuery = useAllTrackedPlaylists();
+  const { isLoading, data } = allTrackedPlaylistsQuery;
 
-  const form = useForm<z.infer<typeof CreateTrackedPlaylistRequestSchema>>({
-    resolver: zodResolver(CreateTrackedPlaylistRequestSchema),
+  const allPlaylistIds = React.useMemo(() => {
+    if (isLoading || !data) {
+      return [];
+    }
+
+    return data.map((trackedPlaylists) => trackedPlaylists.spotifyPlaylist.id);
+  }, [data, isLoading]);
+
+  const form = useForm<
+    z.infer<ReturnType<typeof CreateTrackedPlaylistRequestSchema>>
+  >({
+    resolver: zodResolver(CreateTrackedPlaylistRequestSchema(allPlaylistIds)),
     defaultValues: {
       spotifyPlaylistId: '',
     },
     mode: 'all',
   });
 
-  const createCreateTrackedPlaylistMutation = useCreateTrackedPlaylist({
-    mutationConfig: {
-      onSuccess: (data) => {
-        setMostRecentTrackedPlaylistId(data.madeForAllPlaylist.id);
-      },
-    },
+  const spotifyPlaylistIdFieldInputValue = useWatch({
+    control: form.control,
+    name: 'spotifyPlaylistId',
   });
 
-  async function onSubmit(
-    values: z.infer<typeof CreateTrackedPlaylistRequestSchema>,
-  ) {
-    console.log(values);
-    await createCreateTrackedPlaylistMutation.mutateAsync({
-      data: {
-        spotifyPlaylistId: values.spotifyPlaylistId,
-      },
-    });
-  }
+  const trackedPlaylistPreview = useTrackedPlaylistPreview({
+    allPlaylistsLoading: isLoading,
+    allPlaylistsData: data ? data : [],
+    inputPlaylistIdValue: spotifyPlaylistIdFieldInputValue,
+    formSubmitted: form.formState.isSubmitted,
+    formSubmitting: form.formState.isSubmitting,
+    formSubmittedSuccessfully: form.formState.isSubmitSuccessful,
+  });
+
+  const createCreateTrackedPlaylistMutation = useCreateTrackedPlaylist();
+
+  const onSubmit = async (
+    values: z.infer<ReturnType<typeof CreateTrackedPlaylistRequestSchema>>,
+  ) => {
+    try {
+      const res = await createCreateTrackedPlaylistMutation.mutateAsync({
+        data: {
+          spotifyPlaylistId: values.spotifyPlaylistId,
+        },
+      });
+
+      trackedPlaylistPreview.setMostRecentlyTrackedPlaylist(res);
+    } catch (err) {
+      toast.error('Something went wrong.');
+    }
+  };
+
+  const getNewTrackedPlaylistComponent = () => {
+    switch (trackedPlaylistPreview.trackedPlaylistViewState) {
+      case TrackedPlaylistViewState.None: {
+        return null;
+      }
+      case TrackedPlaylistViewState.Loading: {
+        return <TrackedPlaylistPreview isLoading />;
+      }
+      case TrackedPlaylistViewState.NewTrackedPlaylist:
+      case TrackedPlaylistViewState.PreviouslyTrackedPlaylist: {
+        return (
+          <TrackedPlaylistPreview
+            isLoading={false}
+            playlist={trackedPlaylistPreview.trackedPlaylist}
+          />
+        );
+      }
+    }
+  };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      <div className="mb-12 max-w-2xl space-y-4 ">
+    <div className="flex min-h-screen flex-col items-center justify-center px-8">
+      <div className="mb-12 w-full max-w-2xl space-y-4">
         <div className="text-center">
           <h1 className="text-5xl font-bold ">Made For All!</h1>
           <p className="mt-4 text-xl">
@@ -60,7 +115,7 @@ export const LandingPage = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex items-end space-x-2"
+            className="flex flex-col space-y-2 md:flex-row md:items-end md:space-x-2"
           >
             <FormField
               control={form.control}
@@ -80,15 +135,23 @@ export const LandingPage = () => {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              disabled={form.formState.isSubmitting || !form.formState.isValid}
-            >
-              Track Playlist
-            </Button>
+            <div>
+              <Button
+                type="submit"
+                disabled={
+                  form.formState.isSubmitting || !form.formState.isValid
+                }
+                className={`${form.getFieldState('spotifyPlaylistId').error && 'md:mb-7'} w-full`}
+              >
+                Track Playlist
+              </Button>
+            </div>
           </form>
         </Form>
-        {form.formState.isSubmitSuccessful && mostRecentTrackedPlaylistId}
+        {getNewTrackedPlaylistComponent()}
+        <div className="pt-8">
+          <RecentTrackedPlaylistsCarousel />
+        </div>
       </div>
     </div>
   );
