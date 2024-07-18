@@ -1,2 +1,2 @@
-export * from './usePaginatedPlaylists.hook';
+export * from './useAllTrackedPlaylistsPage.hook';
 export * from './useSearchedPlaylists.hook';
