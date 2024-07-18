@@ -16,7 +16,7 @@ export const TrackedPlaylistPreview = ({
   if (isLoading) {
     return (
       <div data-testid="tracked-playlist-preview-loading-skeleton">
-        <div className="flex items-center gap-x-6">
+        <div className="flex items-center gap-x-2 sm:gap-x-6">
           <Skeleton className="size-16 rounded-xl sm:size-36" />
           <div className="flex grow flex-col gap-y-2">
             <Skeleton className="h-10" />
