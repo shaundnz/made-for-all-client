@@ -1,11 +1,6 @@
 import React from 'react';
 
-import { GetAllTrackedPlaylistResponseDto } from '@/api/playlists/contracts';
-
-export const usePaginatedPlaylists = (
-  playlists: GetAllTrackedPlaylistResponseDto,
-  resultsPerPage: number,
-) => {
+export const usePaginatedItems = <T>(items: T[], resultsPerPage: number) => {
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const incrementPage = () => {
@@ -23,8 +18,8 @@ export const usePaginatedPlaylists = (
   };
 
   const totalPages = React.useMemo(() => {
-    return Math.max(1, Math.ceil(playlists.length / resultsPerPage));
-  }, [playlists.length, resultsPerPage]);
+    return Math.max(1, Math.ceil(items.length / resultsPerPage));
+  }, [items.length, resultsPerPage]);
 
   if (currentPage < 1) {
     setCurrentPage(1);
@@ -34,11 +29,11 @@ export const usePaginatedPlaylists = (
     setCurrentPage(totalPages);
   }
 
-  const paginatedPlaylists = React.useMemo(() => {
+  const paginatedItems = React.useMemo(() => {
     const startIndex = (currentPage - 1) * resultsPerPage;
     const endIndex = startIndex + resultsPerPage;
-    return playlists.slice(startIndex, endIndex);
-  }, [currentPage, playlists, resultsPerPage]);
+    return items.slice(startIndex, endIndex);
+  }, [currentPage, items, resultsPerPage]);
 
   const hasPreviousPage = currentPage > 1;
   const hasNextPage = currentPage < totalPages;
@@ -50,6 +45,6 @@ export const usePaginatedPlaylists = (
     totalPages,
     incrementPage,
     decrementPage,
-    paginatedPlaylists,
+    paginatedItems,
   };
 };
