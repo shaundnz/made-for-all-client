@@ -1,10 +1,19 @@
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+
 import { AppProvider } from './AppProvider';
-import { LandingPage } from './routes/LandingPage';
+import { createRouter } from './routes';
+
+const AppRouter = () => {
+  const router = React.useMemo(() => createRouter(), []);
+
+  return <RouterProvider router={router} />;
+};
 
 const App = () => {
   return (
     <AppProvider>
-      <LandingPage />
+      <AppRouter />
     </AppProvider>
   );
 };

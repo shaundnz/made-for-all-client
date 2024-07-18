@@ -48,6 +48,18 @@ describe('LandingPage', () => {
     ).toBe(3);
   });
 
+  it('should show a link to the all tracked playlists page', () => {
+    renderWithContext(<LandingPage />, {});
+
+    const link = screen.getByRole('link', {
+      name: 'View All Tracked Playlists',
+    });
+
+    expect(link).toBeInTheDocument();
+    expect(link).toBeEnabled();
+    expect(link).toHaveAttribute('href', '/playlists');
+  });
+
   it.each([
     'https://example.com',
     'https://open.spotify.com/playlist',

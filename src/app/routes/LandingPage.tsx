@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -103,10 +104,10 @@ export const LandingPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-8">
+    <div className="mt-32 flex min-h-screen flex-col items-center px-8">
       <div className="mb-12 w-full max-w-2xl space-y-4">
         <div className="text-center">
-          <h1 className="text-5xl font-bold ">Made For All!</h1>
+          <h1 className="text-5xl font-bold">Made For All!</h1>
           <p className="mt-4 text-xl">
             Enter a &quot;Made For You&quot; Spotify playlist, and generate a
             playlist of the the original, uncustomized version.
@@ -149,7 +150,12 @@ export const LandingPage = () => {
           </form>
         </Form>
         {getNewTrackedPlaylistComponent()}
-        <div className="pt-8">
+        <div className="flex justify-center pt-4">
+          <Button asChild variant="secondary">
+            <Link to="/playlists">View All Tracked Playlists</Link>
+          </Button>
+        </div>
+        <div className="">
           <RecentTrackedPlaylistsCarousel />
         </div>
       </div>
