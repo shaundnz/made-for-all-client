@@ -1,3 +1,3 @@
 export * from './CarouselPlaylistItem';
-export * from './NewTrackedPlaylist';
+export * from './TrackedPlaylistPreview';
 export * from './RecentTrackedPlaylistsCarousel';

@@ -4,18 +4,18 @@ import { CreateTrackedPlaylistResponseDto } from '@/api/playlists/contracts';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
-interface NewTrackedPlaylistProps {
+interface TrackedPlaylistPreviewProps {
   isLoading: boolean;
-  mostRecentlyTrackedPlaylist?: CreateTrackedPlaylistResponseDto;
+  playlist?: CreateTrackedPlaylistResponseDto;
 }
 
-export const NewTrackedPlaylist = ({
+export const TrackedPlaylistPreview = ({
   isLoading,
-  mostRecentlyTrackedPlaylist,
-}: NewTrackedPlaylistProps) => {
+  playlist,
+}: TrackedPlaylistPreviewProps) => {
   if (isLoading) {
     return (
-      <div data-testid="new-tracked-playlist-loading-skeleton">
+      <div data-testid="tracked-playlist-preview-loading-skeleton">
         <div className="flex items-center gap-x-6">
           <Skeleton className="size-36 rounded-xl" />
           <div className="flex grow flex-col gap-y-2">
@@ -28,7 +28,7 @@ export const NewTrackedPlaylist = ({
     );
   }
 
-  if (!mostRecentlyTrackedPlaylist) {
+  if (!playlist) {
     return null;
   }
 
@@ -37,10 +37,10 @@ export const NewTrackedPlaylist = ({
     madeForAllPlaylist: {
       external_urls: { spotify: madeForAllPlaylistLink },
     },
-  } = mostRecentlyTrackedPlaylist;
+  } = playlist;
 
   return (
-    <div>
+    <div data-testid="tracked-playlist-preview">
       <div className="flex items-center gap-x-6">
         <img
           className="size-36 rounded-xl"

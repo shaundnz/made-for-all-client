@@ -2,22 +2,19 @@ import { render, screen, within } from '@testing-library/react';
 
 import { generateMadeForAllPlaylist } from '@/testing/dataGenerators';
 
-import { NewTrackedPlaylist } from './NewTrackedPlaylist';
+import { TrackedPlaylistPreview } from './TrackedPlaylistPreview';
 
-const loadingSkeletonDataTestId = 'new-tracked-playlist-loading-skeleton';
+const loadingSkeletonDataTestId = 'tracked-playlist-preview-loading-skeleton';
 const trackedPlaylist = generateMadeForAllPlaylist();
 
-describe('NewTrackedPlaylist', () => {
+describe('TrackedPlaylistPreview', () => {
   it('should render', () => {
     const {
       spotifyPlaylist: { name, description },
     } = trackedPlaylist;
 
     render(
-      <NewTrackedPlaylist
-        isLoading={false}
-        mostRecentlyTrackedPlaylist={trackedPlaylist}
-      />,
+      <TrackedPlaylistPreview isLoading={false} playlist={trackedPlaylist} />,
     );
 
     expect(
@@ -30,12 +27,12 @@ describe('NewTrackedPlaylist', () => {
   });
 
   it('should render the loading state', () => {
-    render(<NewTrackedPlaylist isLoading={true} />);
+    render(<TrackedPlaylistPreview isLoading={true} />);
     expect(screen.getByTestId(loadingSkeletonDataTestId)).toBeInTheDocument();
   });
 
-  it('should render nothing is isLoading is false and mostRecentlyTrackedPlaylist is not set', () => {
-    const { container } = render(<NewTrackedPlaylist isLoading={false} />);
+  it('should render nothing is isLoading is false and playlist is not set', () => {
+    const { container } = render(<TrackedPlaylistPreview isLoading={false} />);
     expect(container).toBeEmptyDOMElement();
   });
 
@@ -47,10 +44,7 @@ describe('NewTrackedPlaylist', () => {
     } = trackedPlaylist;
 
     render(
-      <NewTrackedPlaylist
-        isLoading={false}
-        mostRecentlyTrackedPlaylist={trackedPlaylist}
-      />,
+      <TrackedPlaylistPreview isLoading={false} playlist={trackedPlaylist} />,
     );
 
     const link = screen.getByRole('link');
@@ -66,10 +60,7 @@ describe('NewTrackedPlaylist', () => {
     } = trackedPlaylist;
 
     render(
-      <NewTrackedPlaylist
-        isLoading={false}
-        mostRecentlyTrackedPlaylist={trackedPlaylist}
-      />,
+      <TrackedPlaylistPreview isLoading={false} playlist={trackedPlaylist} />,
     );
 
     const image = screen.getByAltText(`${name} playlist cover`);
