@@ -49,7 +49,7 @@ describe('LandingPage', () => {
   });
 
   it('should show a link to the all tracked playlists page', () => {
-    renderWithContext(<LandingPage />, {});
+    renderWithContext(<LandingPage />);
 
     const link = screen.getByRole('link', {
       name: 'View All Tracked Playlists',
