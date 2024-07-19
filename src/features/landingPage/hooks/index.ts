@@ -1,1 +1,1 @@
-export * from './useRecentlyTrackedPlaylists.hook';
+export * from './useTrackedPlaylistPreview.hook';

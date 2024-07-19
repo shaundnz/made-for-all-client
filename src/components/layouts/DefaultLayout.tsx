@@ -6,7 +6,7 @@ export const DefaultLayout = () => {
   return (
     <div>
       <Header />
-      <div className="px-16 py-8">
+      <div className="p-8 sm:px-16">
         <Outlet />
       </div>
     </div>

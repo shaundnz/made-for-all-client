@@ -31,7 +31,6 @@ beforeEach(() => {
   vi.stubGlobal('ResizeObserver', ResizeObserverMock);
   vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
   vi.stubGlobal('matchMedia', matchMediaMock);
-
   initializeDb();
 });
 
