@@ -28,13 +28,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Clean install dependencies and build client
-        run: |
-          npm ci
-          npm run build
+      - name: Clean install dependencies
+        run: npm ci
 
       - name: Run unit tests
         run: npm run test
+
+      - name: Build client
+        run: npm run build
 
       - name: Install AWS CDK
         run: npm i -g aws-cdk
@@ -58,6 +59,8 @@ jobs:
       - name: Deploy stack
         working-directory: ./cdk
         run: cdk deploy --require-approval never
+        env:
+          AWS_CERTIFICATE_ARN: ${{ secrets.AWS_CERTIFICATE_ARN }}
 
       - name: Run E2E tests
         run: npm run test:e2e
