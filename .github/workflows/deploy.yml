@@ -1,0 +1,57 @@
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: environment to deploy to
+        required: true
+
+    secrets:
+      AWS_ROLE_TO_ASSUME:
+        required: true
+      AWS_REGION:
+        required: true
+      AWS_CERTIFICATE_ARN:
+        required: true
+
+jobs:
+  deploy:
+    name: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Clean install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm run test
+
+      - name: Install AWS CDK
+        run: npm i -g aws-cdk
+
+      - name: Clean install CDK dependendies
+        working-directory: ./cdk
+        run: npm ci
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Synth stack
+        working-directory: ./cdk
+        run: cdk synth
+
+      - name: Deploy stack
+        working-directory: ./cdk
+        run: cdk deploy --require-approval never
+        env:
+          AWS_CERTIFICATE_ARN: ${{ secrets.AWS_CERTIFICATE_ARN }}
+
+      - name: Run E2E tests
+        run: npm run test:e2e

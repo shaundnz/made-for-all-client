@@ -1,0 +1,17 @@
+name: Validate Pull Request
+
+on: pull_request
+
+jobs:
+  deploy:
+    name: Deploy
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      environment: test
+    secrets:
+      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_CERTIFICATE_ARN: ${{ secrets.AWS_CERTIFICATE_ARN }}
