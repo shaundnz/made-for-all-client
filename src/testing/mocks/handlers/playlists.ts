@@ -8,7 +8,7 @@ import { withDelay } from '../middleware';
 
 export const playlistHandlers = [
   http.get(
-    `${env.MADE_FOR_ALL_API_BASE_URL}/playlists`,
+    `${env.API_BASE_URL}/playlists`,
     withDelay(() => {
       try {
         const playlists = db.playlist.getAll();
@@ -23,7 +23,7 @@ export const playlistHandlers = [
   ),
 
   http.post(
-    `${env.MADE_FOR_ALL_API_BASE_URL}/playlists`,
+    `${env.API_BASE_URL}/playlists`,
     withDelay(async ({ request }) => {
       try {
         const { spotifyPlaylistId } = (await request.json()) as {
@@ -64,7 +64,7 @@ export const playlistHandlers = [
   ),
 
   http.put(
-    `${env.MADE_FOR_ALL_API_BASE_URL}/playlists`,
+    `${env.API_BASE_URL}/playlists`,
     withDelay(async ({ request }) => {
       try {
         const { spotifyPlaylistId } = (await request.json()) as {
@@ -100,7 +100,7 @@ export const playlistHandlers = [
   ),
 
   http.get(
-    `${env.MADE_FOR_ALL_API_BASE_URL}/playlists/:id`,
+    `${env.API_BASE_URL}/playlists/:id`,
     withDelay(({ params }) => {
       try {
         const spotifyPlaylistId = params.id as string;
@@ -130,7 +130,7 @@ export const playlistHandlers = [
   ),
 
   http.delete(
-    `${env.MADE_FOR_ALL_API_BASE_URL}/playlists/:id`,
+    `${env.API_BASE_URL}/playlists/:id`,
     withDelay(({ params }) => {
       try {
         const spotifyPlaylistId = params.id as string;
