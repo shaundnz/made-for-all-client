@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
 
+    env:
+      VITE_APP_API_BASE_URL: ${{ vars.VITE_APP_API_BASE_URL }}
+      VITE_APP_BASE_URL: ${{ vars.VITE_APP_BASE_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,6 +33,9 @@ jobs:
 
       - name: Run unit tests
         run: npm run test
+
+      - name: Build client
+        run: npm run build
 
       - name: Install AWS CDK
         run: npm i -g aws-cdk
@@ -46,12 +53,17 @@ jobs:
       - name: Synth stack
         working-directory: ./cdk
         run: cdk synth
+        env:
+          AWS_CERTIFICATE_ARN: ${{ secrets.AWS_CERTIFICATE_ARN }}
 
       - name: Deploy stack
         working-directory: ./cdk
         run: cdk deploy --require-approval never
         env:
           AWS_CERTIFICATE_ARN: ${{ secrets.AWS_CERTIFICATE_ARN }}
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
 
       - name: Run E2E tests
         run: npm run test:e2e

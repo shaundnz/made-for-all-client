@@ -90,7 +90,7 @@ describe('LandingPage', () => {
 
     server.use(
       http.post(
-        `${env.MADE_FOR_ALL_API_BASE_URL}/playlists`,
+        `${env.API_BASE_URL}/playlists`,
         withDelay(() => {
           db.playlist.create(newPlaylist);
           return HttpResponse.json(newPlaylist);
@@ -156,7 +156,7 @@ describe('LandingPage', () => {
   it('should show an error toast if the track playlist request fails', async () => {
     server.use(
       http.post(
-        `${env.MADE_FOR_ALL_API_BASE_URL}/playlists`,
+        `${env.API_BASE_URL}/playlists`,
         withDelay(() => {
           return HttpResponse.json(
             { message: 'Server Error' },

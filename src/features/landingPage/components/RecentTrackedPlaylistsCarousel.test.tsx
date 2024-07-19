@@ -99,7 +99,7 @@ describe('RecentTrackedPlaylistsCarousel', () => {
   it('should render nothing if the request for all playlists errors', async () => {
     server.use(
       http.get(
-        `${env.MADE_FOR_ALL_API_BASE_URL}/playlists`,
+        `${env.API_BASE_URL}/playlists`,
         withDelay(() => {
           return HttpResponse.json(
             { message: 'Server Error' },
