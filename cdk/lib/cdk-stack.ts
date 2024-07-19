@@ -18,7 +18,7 @@ export class CdkStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
-    const certificateArn = process.env.AWS_CERTIFICATE_ARN;
+    const certificateArn = process.env.AWS_CERTIFICATE_ARN || '';
 
     const certificate = acm.Certificate.fromCertificateArn(
       this,
