@@ -76,7 +76,9 @@ export const RecentTrackedPlaylistsCarousel = () => {
             >
               <CarouselPlaylistItem
                 title={playlist.spotifyPlaylist.name}
-                externalPlaylistLink={playlist.madeForAllPlaylist.href}
+                externalPlaylistLink={
+                  playlist.madeForAllPlaylist.external_urls.spotify
+                }
                 playlistCoverImageUrl={playlist.spotifyPlaylist.images[0].url}
               />
             </CarouselItem>

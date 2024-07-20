@@ -9,20 +9,20 @@ const defaultProps = {
 };
 
 describe('CarouselPlaylistItem', () => {
-  it('should render', () => {
+  it('should render an accessible link', () => {
     const { title } = defaultProps;
     render(<CarouselPlaylistItem {...defaultProps} />);
 
-    const link = screen.getByRole('link');
+    const link = screen.getByRole('link', { name: title });
     expect(link).toBeInTheDocument();
     expect(within(link).getByText(title)).toBeInTheDocument();
   });
 
-  it('should render the image with an accessible alt tag', () => {
-    const { title, playlistCoverImageUrl } = defaultProps;
+  it('should render the image', () => {
+    const { playlistCoverImageUrl } = defaultProps;
     render(<CarouselPlaylistItem {...defaultProps} />);
 
-    const image = screen.getByAltText(`Open ${title} playlist in Spotify`);
+    const image = screen.getByTestId('carousel-playlist-item-playlist-cover');
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute('src', playlistCoverImageUrl);
   });

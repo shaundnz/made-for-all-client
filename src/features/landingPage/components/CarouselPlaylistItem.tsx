@@ -12,7 +12,7 @@ export const CarouselPlaylistItem = ({
   externalPlaylistLink,
 }: CarouselPlaylistItemProps) => {
   return (
-    <div className="space-y-2 p-1">
+    <div className="space-y-2 p-1" data-testid="carousel-playlist-item">
       <Button
         asChild
         variant="link"
@@ -22,7 +22,8 @@ export const CarouselPlaylistItem = ({
           <img
             className="rounded-xl"
             src={playlistCoverImageUrl}
-            alt={`Open ${title} playlist in Spotify`}
+            alt=""
+            data-testid="carousel-playlist-item-playlist-cover"
           />
           <div className="text-wrap text-xl font-semibold">
             <span>{title}</span>
