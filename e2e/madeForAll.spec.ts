@@ -5,11 +5,10 @@ import { ApiHelper } from './ApiHelper';
 const spotifyPlaylistId = '37i9dQZF1E8OODrDnXXklo';
 const playlistTitle = 'Not For Nothing Radio';
 
-const baseUrl = process.env.VITE_APP_BASE_URL || 'http://localhost:5173';
 const apiBaseUrl = process.env.VITE_APP_API_BASE_URL || 'http://localhost:3000';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto(baseUrl);
+  await page.goto('/');
   await expect(page).toHaveTitle('MadeForAll');
 });
 
