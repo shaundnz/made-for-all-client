@@ -20,6 +20,7 @@ jobs:
 
   e2e-tests:
     name: Run E2E Tests
+    needs: deploy
     uses: ./.github/workflows/e2e-tests.yml
     permissions:
       contents: read
