@@ -141,7 +141,11 @@ export const AllTrackedPlaylistsPage = () => {
           <div className="flex flex-col">
             {paginatedPlaylists.map((playlist, index) => (
               <div key={playlist.spotifyPlaylist.id}>
-                <TrackedPlaylistPreview playlist={playlist} isLoading={false} />
+                <TrackedPlaylistPreview
+                  playlist={playlist}
+                  isLoading={false}
+                  showCreatedDate
+                />
                 {index < paginatedPlaylists.length - 1 && (
                   <Separator className="my-2" />
                 )}
