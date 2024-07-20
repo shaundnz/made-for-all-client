@@ -78,7 +78,6 @@ export const AllTrackedPlaylistsPage = () => {
   return (
     <div className="space-y-4">
       <AllTrackedPlaylistsPageHeader />
-
       <div className="flex flex-col space-x-1 sm:flex-row">
         <div className="min-w-64">
           <Label htmlFor="search">Search Playlists</Label>

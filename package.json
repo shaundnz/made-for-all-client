@@ -11,7 +11,7 @@
     "test:e2e": "npx playwright test",
     "prepare": "husky && husky install",
     "lint": "eslint . --ignore-path .gitignore --report-unused-disable-directives --max-warnings 0",
-    "lint:staged": "eslint --ignore-path .gitignore --report-unused-disable-directives --max-warnings 0",
+    "lint:staged": "eslint --ignore-path .gitignore --report-unused-disable-directives --max-warnings 0 --no-ignore",
     "check-types": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
