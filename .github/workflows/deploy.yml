@@ -16,7 +16,7 @@ on:
 
 jobs:
   deploy:
-    name: ${{ inputs.environment }}
+    name: 'Environment: ${{ inputs.environment }}'
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
 
@@ -61,9 +61,3 @@ jobs:
         run: cdk deploy --require-approval never
         env:
           AWS_CERTIFICATE_ARN: ${{ secrets.AWS_CERTIFICATE_ARN }}
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-
-      - name: Run E2E tests
-        run: npm run test:e2e

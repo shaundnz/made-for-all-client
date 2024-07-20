@@ -1,0 +1,24 @@
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: environment to deploy to
+        required: true
+
+jobs:
+  e2e-tests:
+    name: 'Environment: ${{ inputs.environment }}'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    env:
+      VITE_APP_API_BASE_URL: ${{ vars.VITE_APP_API_BASE_URL }}
+      VITE_APP_BASE_URL: ${{ vars.VITE_APP_BASE_URL }}
+
+    steps:
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run E2E tests
+        run: npm run test:e2e

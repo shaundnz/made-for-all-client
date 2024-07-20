@@ -32,19 +32,10 @@ test('user can track a playlist', async ({ page }) => {
   await homePage.verifyNewTrackedPlaylist(playlistTitle);
 
   // Verify Spotify link
-  // const spotifyPagePromise = spotifyPlaylistPage.getPagePromise();
-  // await homePage.clickNewTrackedPlaylistLink();
-  // const spotifyPage = await spotifyPagePromise;
   await spotifyPlaylistPage.verifyOnSpotifyPlaylistPage(
     () => homePage.clickNewTrackedPlaylistLink(),
     playlistTitle,
   );
-  // await spotifyPlaylistPage.verifyOnSpotifyPlaylistPage2(
-  //   spotifyPage,
-  //   playlistTitle,
-  // );
-  // await spotifyPage.close();
-
   // Verify on all tracked playlists page
   await homePage.goToAllTrackedPlaylistsPage();
   await allTrackedPlaylistsPage.verifyOnPage();
@@ -52,31 +43,11 @@ test('user can track a playlist', async ({ page }) => {
     playlistTitle,
   );
 
-  // const spotifyPagePromise = page
-  //   .context()
-  //   .waitForEvent('page', { timeout: 3000 });
-  // await page.getByRole('link', { name: 'Go to playlist' }).first().click();
-  // const spotifyPage = await spotifyPagePromise;
-  // await expect(spotifyPage).toHaveURL(
-  //   /^https:\/\/open\.spotify\.com\/playlist\/[A-Za-z0-9]{22}$/,
-  // );
-
   // Verify Spotify link
-  // spotifyPlaylistPage.verifyOnSpotifyPlaylistPage(async () => {
-  //   await page.getByRole('link', { name: 'Go to playlist' }).first().click();
-  // }, playlistTitle);
-  // const spotifyPagePromise2 = spotifyPlaylistPage.getPagePromise();
-  // await allTrackedPlaylistsPage.clickTrackedPlaylistLink(playlistTitle);
-  // const spotifyPage2 = await spotifyPagePromise2;
   await spotifyPlaylistPage.verifyOnSpotifyPlaylistPage(
     () => allTrackedPlaylistsPage.clickTrackedPlaylistLink(playlistTitle),
     playlistTitle,
   );
-  // await spotifyPlaylistPage.verifyOnSpotifyPlaylistPage2(
-  //   spotifyPage2,
-  //   playlistTitle,
-  // );
-  // await spotifyPage2.close();
 
   // Go to home
   await allTrackedPlaylistsPage.clickNavBarHome();
