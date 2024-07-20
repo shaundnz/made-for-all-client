@@ -1,16 +1,22 @@
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { ExternalLink } from 'lucide-react';
 
 import { CreateTrackedPlaylistResponseDto } from '@/api/playlists/contracts';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
+dayjs.extend(relativeTime);
+
 interface TrackedPlaylistPreviewProps {
   isLoading: boolean;
+  showCreatedDate?: boolean;
   playlist?: CreateTrackedPlaylistResponseDto;
 }
 
 export const TrackedPlaylistPreview = ({
   isLoading,
+  showCreatedDate,
   playlist,
 }: TrackedPlaylistPreviewProps) => {
   if (isLoading) {
@@ -36,6 +42,7 @@ export const TrackedPlaylistPreview = ({
     spotifyPlaylist: { name, description, images },
     madeForAllPlaylist: {
       external_urls: { spotify: madeForAllPlaylistLink },
+      createdAt,
     },
   } = playlist;
 
@@ -51,6 +58,11 @@ export const TrackedPlaylistPreview = ({
         <div className="overflow-hidden">
           <div className="truncate text-xl font-bold md:text-3xl">{name}</div>
           <div className="hidden sm:block">{description}</div>
+          {showCreatedDate && (
+            <div className="mt-1 text-sm text-muted-foreground">
+              {dayjs(createdAt).fromNow()}
+            </div>
+          )}
           <Button asChild variant="link">
             <a href={madeForAllPlaylistLink} target="_blank" rel="noreferrer">
               Go to playlist&nbsp;

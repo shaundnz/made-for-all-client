@@ -22,6 +22,13 @@ export class AllTrackedPlaylistsPage {
         .first()
         .getByText(playlistTitle),
     ).toBeVisible({ timeout: 10000 });
+
+    await expect(
+      this.page
+        .getByTestId('tracked-playlist-preview')
+        .first()
+        .getByText('a few seconds ago'),
+    ).toBeVisible();
   }
 
   @boxedStep

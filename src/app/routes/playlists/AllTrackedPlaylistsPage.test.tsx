@@ -188,8 +188,17 @@ describe('AllTrackedPlaylistsPage', () => {
     expect(playlistItems.length).toBe(4);
 
     const expectedOrder = ['Blues', 'Rock', 'Jazz', 'Pop'];
+    const expectedDateString = [
+      'a few seconds ago',
+      'a day ago',
+      '3 days ago',
+      '4 days ago',
+    ];
     expectedOrder.forEach((title, index) => {
       expect(within(playlistItems[index]).getByText(title)).toBeInTheDocument();
+      expect(
+        within(playlistItems[index]).getByText(expectedDateString[index]),
+      ).toBeInTheDocument();
     });
   });
 
