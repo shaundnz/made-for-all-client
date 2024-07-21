@@ -7,7 +7,9 @@ export const Header = () => {
   return (
     <div>
       <div className="flex items-center justify-between px-8 py-2">
-        <div className="text-2xl font-bold">MadeForAll</div>
+        <div className="text-2xl font-bold">
+          <Link to="/">MadeForAll</Link>
+        </div>
         <Button asChild variant="link">
           <Link to="/">Home</Link>
         </Button>
