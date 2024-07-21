@@ -147,7 +147,7 @@ export const LandingPage = () => {
       </Form>
       {getNewTrackedPlaylistComponent()}
       <div className="flex justify-center">
-        <Button asChild variant="secondary">
+        <Button asChild variant="secondary" className="bg-red-200">
           <Link to="/playlists">View All Tracked Playlists</Link>
         </Button>
       </div>
